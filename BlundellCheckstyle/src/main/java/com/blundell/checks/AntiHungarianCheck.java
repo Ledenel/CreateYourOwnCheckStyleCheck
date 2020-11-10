@@ -2,7 +2,7 @@ package com.blundell.checks;
 
 import com.puppycrawl.tools.checkstyle.api.*;
 
-public class AntiHungarianCheck extends Check {
+public class AntiHungarianCheck extends AbstractCheck {
 
     private static final String CATCH_MSG = "Hungarian notation belongs in the 90's. " +
     		                                "Don't prefix member variables with 'm'. " +
@@ -13,6 +13,14 @@ public class AntiHungarianCheck extends Check {
     @Override
     public int[] getDefaultTokens() {
         return new int[] {TokenTypes.VARIABLE_DEF};
+    }
+
+    public int[] getAcceptableTokens() {
+        return getDefaultTokens();
+    }
+
+    public int[] getRequiredTokens() {
+        return getDefaultTokens();
     }
 
     @Override

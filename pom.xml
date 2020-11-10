@@ -7,9 +7,12 @@
   <artifactId>blundell-checkstyle-parent</artifactId>
   <version>1.0</version>
   <packaging>pom</packaging>
+    <properties>
+        <maven.complier.source>11</maven.complier.source>
+        <maven.complier.target>11</maven.complier.target>
+    </properties>
   <modules>
 	<module>BlundellCheckstyle</module>
 	<module>TestProject</module>
   </modules>
-
 </project>
