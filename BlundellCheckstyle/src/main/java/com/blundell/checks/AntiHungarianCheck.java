@@ -25,23 +25,11 @@ public class AntiHungarianCheck extends AbstractCheck {
 
     @Override
     public void visitToken(DetailAST aAST) {
-        String variableName = findVariableName(aAST);
-        if (itsAFieldVariable(aAST) && detector.detectsNotation(variableName)) {
-            reportStyleError(aAST, variableName);
-        }
-    }
-
-    private String findVariableName(DetailAST aAST) {
         DetailAST identifier = aAST.findFirstToken(TokenTypes.IDENT);
-        return identifier.toString();
-    }
-
-    private boolean itsAFieldVariable(DetailAST aAST) {
-        return aAST.getParent().getType() == TokenTypes.OBJBLOCK;
-    }
-
-    private void reportStyleError(DetailAST aAST, String variableName) {
-        log(aAST.getLineNo(), CATCH_MSG + variableName);
+        String variableName = identifier.toString();
+        if (aAST.getParent().getType() == TokenTypes.OBJBLOCK && detector.detectsNotation(variableName)) {
+            this.log(aAST.getLineNo(), CATCH_MSG + variableName);
+        }
     }
 
 }
