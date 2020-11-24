@@ -44,6 +44,7 @@ public class AntiHungarianCheckShould {
 
     private List<File> prepareFilesToBeChecked() {
         String testFileName = "TestClassWithErrors.java";
+        //TODO: do not use fixed testFileName, add flexible method to load resources (automatically read .java files under resources/com.blundell.checks)
         URL testFileUrl = getClass().getResource(testFileName);
         File testFile = new File(testFileUrl.getFile());
         List<File> files = new ArrayList<File>();
