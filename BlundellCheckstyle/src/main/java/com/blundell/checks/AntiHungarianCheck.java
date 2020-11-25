@@ -10,11 +10,15 @@ public class AntiHungarianCheck extends AbstractCheck {
         return regex;
     }
 
+    /**
+     * used by Checkstyle. customize test
+     * @param regex the regex for var name to test
+     */
     public void setRegex(String regex) {
         this.regex = regex;
     }
 
-    private String regex = "m[A-Z0-9].*";
+    private String regex;
 
     @Override
     public int[] getDefaultTokens() {
