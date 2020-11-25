@@ -6,25 +6,25 @@ import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 
 import java.io.File;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class CheckerTest {
-    protected Checker prepareCheckStyleChecker() throws CheckstyleException {
+    protected Checker prepareCheckStyleChecker(Map<String, String> attrs) throws CheckstyleException {
         Checker checker = new Checker();
         checker.setModuleClassLoader(Thread.currentThread().getContextClassLoader());
-        checker.configure(prepareConfiguration());
+        checker.configure(prepareConfiguration(attrs));
         return checker;
     }
 
-    private DefaultConfiguration prepareConfiguration() {
+    private DefaultConfiguration prepareConfiguration(Map<String, String> attrs) {
         DefaultConfiguration checks = new DefaultConfiguration("Checks");
         DefaultConfiguration treeWalker = new DefaultConfiguration("TreeWalker");
         DefaultConfiguration checkerConfig = new DefaultConfiguration(AntiHungarianCheck.class.getCanonicalName());
         checks.addChild(treeWalker);
         treeWalker.addChild(checkerConfig);
+        for (Map.Entry<String, String> attr : attrs.entrySet()) {
+            treeWalker.addAttribute(attr.getKey(), attr.getValue());
+        }
         // TODO add config (maybe via checkerConfig.addChild or addProperty)
         return checks;
     }
