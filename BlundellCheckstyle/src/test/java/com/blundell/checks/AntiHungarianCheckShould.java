@@ -7,9 +7,12 @@ import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -43,13 +46,11 @@ public class AntiHungarianCheckShould {
     }
 
     private List<File> prepareFilesToBeChecked() {
-        String testFileName = "TestClassWithErrors.java";
-        //TODO: do not use fixed testFileName, add flexible method to load resources (automatically read .java files under resources/com.blundell.checks)
-        URL testFileUrl = getClass().getResource(testFileName);
-        File testFile = new File(testFileUrl.getFile());
-        List<File> files = new ArrayList<File>();
-        files.add(testFile);
-        return files;
+        // FIXED do not use fixed testFileName, add flexible method to load resources (automatically read .java files under resources/com.blundell.checks)
+        URL all = getClass().getResource(".");
+        // there will be .class files (Test.class) in it, so get rid of it
+        File[] files = new File(all.getFile()).listFiles((dir, name) -> name.endsWith(".java"));
+        return Arrays.asList(Optional.ofNullable(files).orElse(new File[0]));
     }
 
 }
